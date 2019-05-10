@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const knex = require('knex');
 
-const knexConfig = require('./knexfile.js')
+const knexConfig = require('./knexfile')
 const db = knex(knexConfig.development);
 
 const server = express();
@@ -64,15 +64,20 @@ server.post('/api/items', async (req, res) => {
 }); 
 
 
-// get for retrieving a project by its id 
-server.get('/api/packing_list/items', (req, res) => {
+//get for retrieving a project by its id 
+server.get('/api/packing_list/:id/items', async (req, res) => {
   try {
-    const packing = await db('packing_list')
-      .innerJoin('items', 'cohorts.id', 'students.cohort_id')
-      .select('cohorts.name', 'students.name')
-      .where({ cohort_id: req.params.id })
+    const list = await db('packing_list')
+      .where({ id: req.params.id })
+      .first()
+    const items = await db('items')
+      // .leftJoin('items', 'packing_list.id', 'items.packing_list_id')
+      // .select('*', 'items.name')
+      .where({ packing_list_id: list.id })
 
-    res.status(200).json(cohort);
+    const results = list;
+    results.items = items;
+    res.status(200).json(results);
   } catch (error) {
     res.status(500).json(error);
   }

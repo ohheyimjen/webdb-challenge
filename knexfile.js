@@ -12,7 +12,13 @@ module.exports = {
     },
     useNullAsDefault: true
   },
-
+  pool: {
+    // runs after a connection is made to the sqlite engine
+    afterCreate: (conn, done) => {
+      // by default SQLite will not enforce foreign keys
+      conn.run('PRAGMA foreign _keys = ON', done);
+    }
+  }
   
 
 };
