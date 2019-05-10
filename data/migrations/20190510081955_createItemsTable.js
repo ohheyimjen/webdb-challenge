@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       .string('name', 128).notNullable()
       .string('description', 250).notNullable()
       .string('notes', 250)
-      .unique()
+      
 
   })
 };
