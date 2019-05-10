@@ -37,11 +37,17 @@ Demonstrate your understanding of this week's concepts by answering the followin
 Relational Database Management System is the actual database software, which manages the storage, queries, updating, etc. The Structured Query Language is a language which is used to query the RDBMS.
 
 1. Why do tables need a `primary key`?
+
+It ensures that is you have more than one item with the same name, they can still be distinctly identified by their primary key.
+
+
 1. What is the name given to a table column that references the primary key on another table.
 
 Foreign key
 
 1. What do we need in order to have a _many to many_ relationship between two tables.
+
+A third table that will hold foreign keys that will reference the primary keys on each of your many-to-many tables, giving them the ability to pull information off of each other.
 
 ## Project Set Up
 
