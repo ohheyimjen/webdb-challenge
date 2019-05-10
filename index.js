@@ -65,6 +65,18 @@ server.post('/api/items', async (req, res) => {
 
 
 // get for retrieving a project by its id 
+server.get('/api/packing_list/items', (req, res) => {
+  try {
+    const packing = await db('packing_list')
+      .innerJoin('items', 'cohorts.id', 'students.cohort_id')
+      .select('cohorts.name', 'students.name')
+      .where({ cohort_id: req.params.id })
+
+    res.status(200).json(cohort);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 
 const port = process.env.PORT || 6000;
